@@ -45,8 +45,8 @@ const CollectionList = () => {
   const fetchData = () => {
     const collection = result && JSON.parse(result);
 
-    if (collection) setList(collection);
-    if (!collection) setList("none");
+    if (Object.keys(collection)?.length) setList(collection);
+    if (!collection) setList({});
 
     setLoading(false);
   };
@@ -65,8 +65,8 @@ const CollectionList = () => {
   }, [result]);
 
   const renderList = () => {
-    if (!list || list === "none") return "You do not have any collection.";
-    if (list) {
+    const haveList = Object.keys(list)?.length
+    if (haveList) {
       const objKeys = Object?.keys(list);
       return objKeys?.map((name) => {
         const item = list[name];
@@ -91,6 +91,8 @@ const CollectionList = () => {
         );
       });
     }
+
+    return "You do not have any collection.";
   };
 
   return (

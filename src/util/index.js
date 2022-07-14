@@ -110,13 +110,14 @@ export const handleFavourites = async (obj) => {
 
   const result = await getCollection(obj);
   const collection = JSON.parse(result);
+  const haveCollection = Object.keys(collection)?.length;
 
-  if (!collection) {
+  if (!haveCollection) {
     doCollectionName({ type: "create-new", data: obj });
     return true;
   }
 
-  if (collection) {
+  if (haveCollection) {
     doCollectionList(obj);
     return true;
   }
