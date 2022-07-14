@@ -43,10 +43,12 @@ const CollectionList = () => {
   `;
 
   const fetchData = () => {
-    const collection = result && JSON.parse(result);
+    if (result) {
+      const collection = result && JSON.parse(result);
 
-    if (Object.keys(collection)?.length) setList(collection);
-    if (!collection) setList({});
+      if (Object.keys(collection)?.length) setList(collection);
+      if (!collection) setList({});
+    }
 
     setLoading(false);
   };
@@ -58,14 +60,18 @@ const CollectionList = () => {
       delete tempObj[name];
       setList(tempObj);
     }
-  }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (list && result) fetchData();
   }, [result]);
 
   const renderList = () => {
-    const haveList = Object.keys(list)?.length
+    const haveList = Object.keys(list)?.length;
     if (haveList) {
       const objKeys = Object?.keys(list);
       return objKeys?.map((name) => {
@@ -99,7 +105,9 @@ const CollectionList = () => {
     <Layout>
       <Container>{!loading ? renderList() : <Loading center />}</Container>
       <Footer>
-        <Button onClick={() => doCollectionName({ type: "create-new", data: {} })}>
+        <Button
+          onClick={() => doCollectionName({ type: "create-new", data: {} })}
+        >
           Create New Collection
         </Button>
       </Footer>

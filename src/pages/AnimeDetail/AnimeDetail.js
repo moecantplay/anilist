@@ -41,7 +41,9 @@ const AnimeDetail = () => {
       meanScore: detail?.meanScore,
     };
 
-    handleFavourites(dataFormat);
+    const result = await handleFavourites(dataFormat);
+
+    if (result) setInCollection({});
   };
 
   const InfoRow = styled.div`
